@@ -1,0 +1,57 @@
+name: make report
+
+on:
+  schedule:
+    - cron: "0 0 1 * *" # 分、時、日、月、曜日？毎月1日の 00:00 UTC（日本時間 09:00）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  make_report_cron:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Git 設定
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: タグ作成
+        id: tag
+        run: |
+          TAG="v$(date +'%Y.%m.%d')"
+          # すでにタグが存在する場合は時分秒を付与
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            TAG="v$(date +'%Y.%m.%d-%H%M%S')"
+          fi
+          TAG="v$(date +'%Y.%m.%d-%H%M%S')"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          git tag $TAG
+          git push origin $TAG
+
+      - name: Python をセットアップ
+        uses: actions/setup-python@v6
+
+      - name: Python ライブラリをセットアップ
+        run: |
+          sudo apt update
+
+      - name: make honban
+        run: |
+          python admin.py
+
+      - name: Upload binaries to release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag.outputs.tag }}
+          artifacts: "report.html"
+          bodyFile: "body.md"
+
+      - name: send mail
+        run: |
+          echo ${{ secrets.EMAIL }}
+          echo test | mail -s "test" ${{ secrets.EMAIL }}
