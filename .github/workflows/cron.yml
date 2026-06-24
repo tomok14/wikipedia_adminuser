@@ -2,7 +2,8 @@ name: make report
 
 on:
   schedule:
-    - cron: "0 0 1 * *" # 分、時、日、月、曜日？毎月1日の 00:00 UTC（日本時間 09:00）
+    #- cron: "0 0 1 * *" # 分、時、日、月、曜日？毎月1日の 00:00 UTC（日本時間 09:00）
+    - cron: "0 0 * * *" # 分、時、日、月、曜日？毎月1日の 00:00 UTC（日本時間 09:00）
   workflow_dispatch:
 
 permissions:
