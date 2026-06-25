@@ -136,7 +136,7 @@ th {
 
 def main():
     # rolelist = ["rollbacker", "abusefilter"]
-    rolelist = ["bureaucrat", "suppresss"]
+    rolelist = ["sysop", "bureaucrat", "suppress", "checkuser"]
 
     all_result = {}
 
