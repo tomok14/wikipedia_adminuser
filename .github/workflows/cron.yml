@@ -57,6 +57,18 @@ jobs:
           artifacts: "report.html"
           bodyFile: "body.md"
 
+
+- uses: dawidd6/action-send-mail@v3
+  with:
+    server_address: smtp.example.com
+    server_port: 587
+    username: ${{ secrets.SMTP_USERNAME }}
+    password: ${{ secrets.SMTP_PASSWORD }}
+    subject: Test
+    body: Hello
+    to: user@example.com
+    from: GitHub Actions
+
       - name: send mail
         run: |
           echo ${{ secrets.EMAIL }}
