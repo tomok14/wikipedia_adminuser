@@ -2,8 +2,10 @@ name: make report
 
 on:
   schedule:
-    #- cron: "0 0 1 * *" # 分、時、日、月、曜日？毎月1日の 00:00 UTC（日本時間 09:00）
-    - cron: "0 0 * * *" # 分、時、日、月、曜日？毎月1日の 00:00 UTC（日本時間 09:00）
+    # 毎日 00:00 UTC (09:00 JST)
+    - cron: "0 0 * * *"
+    # 毎月1日 00:00 UTC (09:00 JST)
+    # - cron: "0 0 1 * *"
   workflow_dispatch:
 
 permissions:
@@ -25,14 +27,18 @@ jobs:
         id: tag
         run: |
           TAG="v$(date +'%Y.%m.%d')"
+
           # すでにタグが存在する場合は時分秒を付与
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             TAG="v$(date +'%Y.%m.%d-%H%M%S')"
           fi
+
           TAG="v$(date +'%Y.%m.%d-%H%M%S')"
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
-          git tag $TAG
-          git push origin $TAG
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          git tag "$TAG"
+          git push origin "$TAG"
 
       - name: Python をセットアップ
         uses: actions/setup-python@v6
@@ -54,22 +60,22 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.tag.outputs.tag }}
-          artifacts: "report.html"
-          bodyFile: "body.md"
+          artifacts: report.html
+          bodyFile: body.md
 
+      #- name: Send mail (SMTP Action)
+      #  uses: dawidd6/action-send-mail@v3
+      #  with:
+      #    server_address: smtp.example.com
+      #    server_port: 587
+      #    username: ${{ secrets.SMTP_USERNAME }}
+      #    password: ${{ secrets.SMTP_PASSWORD }}
+      #    subject: Test
+      #    body: Hello
+      #    to: user@example.com
+      #    from: GitHub Actions
 
-- uses: dawidd6/action-send-mail@v3
-  with:
-    server_address: smtp.example.com
-    server_port: 587
-    username: ${{ secrets.SMTP_USERNAME }}
-    password: ${{ secrets.SMTP_PASSWORD }}
-    subject: Test
-    body: Hello
-    to: user@example.com
-    from: GitHub Actions
-
-      - name: send mail
+      - name: Send mail (mail command)
         run: |
-          echo ${{ secrets.EMAIL }}
-          echo test | mail -s "test" ${{ secrets.EMAIL }}
+          echo "${{ secrets.EMAIL }}"
+          echo test | mail -s "test" "${{ secrets.EMAIL }}"
