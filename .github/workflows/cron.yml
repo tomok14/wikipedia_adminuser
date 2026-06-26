@@ -41,7 +41,12 @@ jobs:
         run: |
           sudo apt update
 
-      - name: make honban
+      - name: コマンドをセットアップ
+        run: |
+          sudo apt update
+          sudo apt install -y mailutils
+
+      - name: make report
         run: |
           python admin.py
 
