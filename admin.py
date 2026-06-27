@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
+"""
+Wikipedia管理者の活動状況を調べる
+"""
 
 import time
 import html
-import requests
 from datetime import datetime
+import requests
 
 API = "https://ja.wikipedia.org/w/api.php"
+ROLE_NAMES: dict[str, str] = {
+    "sysop": "管理者",
+    "bureaucrat": "ビューロクラット",
+    "suppress": "オーバーサイト",
+    "checkuser": "チェックユーザー",
+}
 
 
 def get_admin_users(role):
+    """roleのユーザを取得する"""
     users = []
     aufrom = None
 
@@ -25,7 +35,7 @@ def get_admin_users(role):
 
         headers = {"User-Agent": "mybot/1.0"}
 
-        r = requests.get(API, params=params, headers=headers)
+        r = requests.get(API, params=params, headers=headers, timeout=10.0)
         r.raise_for_status()
         data = r.json()
 
@@ -40,6 +50,7 @@ def get_admin_users(role):
 
 
 def get_last_edit(user):
+    """最終編集日時取得"""
     params = {
         "action": "query",
         "list": "usercontribs",
@@ -51,7 +62,7 @@ def get_last_edit(user):
 
     headers = {"User-Agent": "mybot/1.0"}
 
-    r = requests.get(API, params=params, headers=headers)
+    r = requests.get(API, params=params, headers=headers, timeout=10.0)
     r.raise_for_status()
     data = r.json()
 
@@ -63,6 +74,7 @@ def get_last_edit(user):
 
 
 def proc_role(role):
+    """role毎の処理"""
     users = get_admin_users(role)
     result = []
 
@@ -81,6 +93,7 @@ def proc_role(role):
 
 
 def write_html(all_result, filename="report.html"):
+    """最終html生成"""
     with open(filename, "w", encoding="utf-8") as fp:
         fp.write("""<!DOCTYPE html>
 <html lang="ja">
@@ -109,7 +122,9 @@ th {
 """)
 
         for role, result in all_result.items():
-            fp.write(f"<h2>{html.escape(role)}</h2>\n")
+            display_name = ROLE_NAMES.get(role) or role
+            fp.write(f"<h2>{html.escape(display_name)}</h2>\n")
+            # fp.write(f"<h2>{html.escape(role)}</h2>\n")
             fp.write("<table>\n")
             fp.write("<tr><th>利用者</th><th>最終編集日時</th></tr>\n")
 
@@ -135,12 +150,9 @@ th {
 
 
 def main():
-    # rolelist = ["rollbacker", "abusefilter"]
-    rolelist = ["sysop", "bureaucrat", "suppress", "checkuser"]
-
+    """main"""
     all_result = {}
-
-    for role in rolelist:
+    for role in ROLE_NAMES:
         all_result[role] = proc_role(role)
 
         print("sleep(180)")
