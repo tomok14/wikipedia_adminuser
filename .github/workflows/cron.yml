@@ -56,6 +56,13 @@ jobs:
         run: |
           python admin.py
 
+      # 生成したファイルをコミット＆プッシュ
+      - name: Commit & Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Automated File Generation"
+          file_pattern: "report.html" # 対象ファイル（すべて指定する場合は '.'）
+
       - name: Upload binaries to release
         uses: ncipollo/release-action@v1
         with:
