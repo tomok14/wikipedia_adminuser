@@ -10,6 +10,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   make_report_cron:
@@ -33,7 +35,7 @@ jobs:
             TAG="v$(date +'%Y.%m.%d-%H%M%S')"
           fi
 
-          TAG="v$(date +'%Y.%m.%d-%H%M%S')"
+          #TAG="v$(date +'%Y.%m.%d-%H%M%S')"
 
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
@@ -81,6 +83,17 @@ jobs:
       #    body: Hello
       #    to: user@example.com
       #    from: GitHub Actions
+
+      - name: Prepare Pages
+        run: |
+          mkdir public
+          cp report.html public/index.html
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+      - uses: actions/deploy-pages@v4
 
       - name: Send mail (mail command)
         run: |

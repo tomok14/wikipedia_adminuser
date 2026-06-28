@@ -121,6 +121,10 @@ th {
 <h1>利用者最終編集一覧</h1>
 """)
 
+        # 更新日時
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")
+        fp.write(f"<p>更新日時: {html.escape(now)} </p>\n")
+
         for role, result in all_result.items():
             display_name = ROLE_NAMES.get(role) or role
             fp.write(f"<h2>{html.escape(display_name)}</h2>\n")
