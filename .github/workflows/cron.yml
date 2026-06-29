@@ -72,18 +72,6 @@ jobs:
           artifacts: report.html
           bodyFile: body.md
 
-      #- name: Send mail (SMTP Action)
-      #  uses: dawidd6/action-send-mail@v3
-      #  with:
-      #    server_address: smtp.example.com
-      #    server_port: 587
-      #    username: ${{ secrets.SMTP_USERNAME }}
-      #    password: ${{ secrets.SMTP_PASSWORD }}
-      #    subject: Test
-      #    body: Hello
-      #    to: user@example.com
-      #    from: GitHub Actions
-
       - name: Prepare Pages
         run: |
           mkdir public
@@ -99,3 +87,20 @@ jobs:
         run: |
           echo "${{ secrets.EMAIL }}"
           echo test | mail -s "test" "${{ secrets.EMAIL }}"
+
+  deploy:
+    needs: make_report_cron
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
