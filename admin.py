@@ -4,6 +4,7 @@ Wikipedia管理者の活動状況を調べる
 """
 
 import time
+from zoneinfo import ZoneInfo
 import html
 from datetime import datetime
 import requests
@@ -122,7 +123,8 @@ th {
 """)
 
         # 更新日時
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")
+        jst = ZoneInfo("Asia/Tokyo")
+        now = datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S %Z")
         fp.write(f"<p>更新日時: {html.escape(now)} </p>\n")
 
         for role, result in all_result.items():
