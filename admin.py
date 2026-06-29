@@ -135,18 +135,26 @@ th {
             fp.write("<tr><th>利用者</th><th>最終編集日時</th></tr>\n")
 
             for user, ts in result:
+                old_style = ""
+
                 if ts:
                     dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
                     ts_str = dt.strftime("%Y-%m-%d %H:%M:%S UTC")
+
+                    # 1年以上前なら赤背景
+                    age = datetime.now(dt.tzinfo) - dt
+                    if age.days >= 365:
+                        old_style = " style='background-color:#ffcccc'"
                 else:
                     ts_str = "編集なし"
+                    old_style = " style='background-color:#ffcccc'"
 
                 url = f"https://ja.wikipedia.org/wiki/利用者:{user}"
 
                 fp.write(
                     "<tr>"
                     f"<td><a href='{url}'>{html.escape(user)}</a></td>"
-                    f"<td>{html.escape(ts_str)}</td>"
+                    f"<td{old_style}>{html.escape(ts_str)}</td>"
                     "</tr>\n"
                 )
 
