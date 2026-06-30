@@ -81,8 +81,6 @@ jobs:
         with:
           path: public
 
-      - uses: actions/deploy-pages@v4
-
       - name: Send mail (mail command)
         run: |
           echo "${{ secrets.EMAIL }}"
