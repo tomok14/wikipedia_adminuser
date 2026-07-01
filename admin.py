@@ -119,7 +119,7 @@ th {
 </style>
 </head>
 <body>
-<h1>利用者最終編集一覧</h1>
+<h1>Wikipedia管理者最終編集一覧</h1>
 """)
 
         # 更新日時
@@ -129,7 +129,7 @@ th {
 
         for role, result in all_result.items():
             display_name = ROLE_NAMES.get(role) or role
-            fp.write(f"<h2>{html.escape(display_name)}</h2>\n")
+            fp.write(f"<h2>{html.escape(display_name)}({role})</h2>\n")
             # fp.write(f"<h2>{html.escape(role)}</h2>\n")
             fp.write("<table>\n")
             fp.write("<tr><th>利用者</th><th>最終編集日時</th></tr>\n")
