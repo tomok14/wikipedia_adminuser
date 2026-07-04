@@ -3,11 +3,11 @@ name: make report
 on:
   schedule:
     # 毎日 00:00 UTC (09:00 JST)
-    #- cron: "0 0 * * *"
+    - cron: "0 0 * * *"
     # 毎月1日 00:00 UTC (09:00 JST)
     # - cron: "0 0 1 * *"
     # 毎日曜 00:00 UTC (09:00 JST)
-    - cron: "0 0 * * 0"
+    #- cron: "0 0 * * 0"
   workflow_dispatch:
 
 permissions:
