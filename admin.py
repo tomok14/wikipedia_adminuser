@@ -12,15 +12,11 @@ from datetime import datetime
 import requests
 
 API = "https://ja.wikipedia.org/w/api.php"
-# ROLE_NAMES: dict[str, str] = {
-#    "sysop": "管理者",
-#    "bureaucrat": "ビューロクラット",
-#    "suppress": "オーバーサイト",
-#    "checkuser": "チェックユーザー",
-#    "bot": "BOT",
-# }
 ROLE_NAMES: dict[str, str] = {
+    "sysop": "管理者",
+    "bureaucrat": "ビューロクラット",
     "suppress": "オーバーサイト",
+    "checkuser": "チェックユーザー",
     "bot": "BOT",
 }
 
@@ -284,6 +280,13 @@ def main():
     else:
         sleep_per_role = 180
         sleep_requests = 10
+
+    global ROLE_NAMES
+    if args.t:
+        ROLE_NAMES = {
+            "suppress": "オーバーサイト",
+            "bot": "BOT",
+        }
 
     all_result = {}
     for role in ROLE_NAMES:
