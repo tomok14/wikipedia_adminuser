@@ -28,6 +28,7 @@ def mysleep(sec):
 
 def get_bot_operator(user, sleep_requests):
     """Bot運用者を取得"""
+    print(f"get_bot_operator() start! user={user}")
     params = {
         "action": "query",
         "prop": "revisions",
@@ -55,6 +56,8 @@ def get_bot_operator(user, sleep_requests):
 
     text = revisions[0]["slots"]["main"]["content"]
 
+    print(f"len(text)={len(text)}")
+
     # {{Bot|Akas1950}}から持ってくる
     m = re.search(
         r"\{\{\s*Bot\s*\|\s*([^|}\n]+)",
@@ -62,6 +65,7 @@ def get_bot_operator(user, sleep_requests):
         flags=re.IGNORECASE | re.DOTALL,
     )
     if m:
+        print(f"operator found. from {{{{BOT}}}}: {m.group(1).strip()}")
         return m.group(1).strip()
 
     # | 運用者        = [[user:Akas1950|Akas1950]]
@@ -72,8 +76,10 @@ def get_bot_operator(user, sleep_requests):
     )
 
     if m:
+        print(f"operator found. from 運用者: {m.group(1).strip()}")
         return m.group(1).strip()
 
+    print(f"operator not found. {user}")
     return None
 
 
