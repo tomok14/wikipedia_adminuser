@@ -6,10 +6,11 @@ Wikipedia管理者の活動状況を調べる
 import time
 import re
 import argparse
+import requests
+import mwparserfromhell
 from zoneinfo import ZoneInfo
 import html
 from datetime import datetime
-import requests
 
 API = "https://ja.wikipedia.org/w/api.php"
 ROLE_NAMES: dict[str, str] = {
@@ -24,6 +25,55 @@ ROLE_NAMES: dict[str, str] = {
 def mysleep(sec):
     print(f"sleep({sec})")
     time.sleep(sec)
+
+
+#!/usr/bin/env python3
+
+
+TITLE = "Wikipedia:Bot/ステータス"
+
+
+def get_bot_operator_by_table(bot_name: str) -> str | None:
+    """ボット名から運用者を取得する"""
+
+    params = {
+        "action": "query",
+        "prop": "revisions",
+        "titles": TITLE,
+        "rvslots": "main",
+        "rvprop": "content",
+        "formatversion": "2",
+        "format": "json",
+    }
+    headers = {"User-Agent": "mybot/1.0"}
+
+    r = requests.get(API, params=params, headers=headers, timeout=30)
+    r.raise_for_status()
+    data = r.json()
+
+    text = data["query"]["pages"][0]["revisions"][0]["slots"]["main"]["content"]
+
+    code = mwparserfromhell.parse(text)
+
+    for template in code.filter_templates():
+        if template.name.strip() != "BotL":
+            continue
+
+        try:
+            name = template.get(1).value.strip_code().strip()
+        except ValueError:
+            continue
+
+        if name != bot_name:
+            continue
+
+        try:
+            operator = template.get(2).value.strip_code().strip()
+            return operator
+        except ValueError:
+            return None
+
+    return None
 
 
 def get_bot_operator(user, sleep_requests):
@@ -59,8 +109,13 @@ def get_bot_operator(user, sleep_requests):
     print(f"len(text)={len(text)}")
 
     # {{Bot|Akas1950}}から持ってくる
+    # m = re.search(
+    #     r"\{\{\s*Bot\s*\|\s*([^|}\n]+)",
+    #     text,
+    #     flags=re.IGNORECASE | re.DOTALL,
+    # )
     m = re.search(
-        r"\{\{\s*Bot\s*\|\s*([^|}\n]+)",
+        r"\{\{\s*Bot\b(?:(?!\}\}).)*?\|\s*(?![^|}]*=)([^|}\n]+)",
         text,
         flags=re.IGNORECASE | re.DOTALL,
     )
@@ -78,6 +133,10 @@ def get_bot_operator(user, sleep_requests):
     if m:
         print(f"operator found. from 運用者: {m.group(1).strip()}")
         return m.group(1).strip()
+
+    operator = get_bot_operator_by_table(user)
+    if operator:
+        return operator
 
     print(f"operator not found. {user}")
     return None
