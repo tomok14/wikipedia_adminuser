@@ -76,6 +76,56 @@ def get_bot_operator_by_table(bot_name: str) -> str | None:
     return None
 
 
+def get_bot_operator_global(user, sleep_requests):
+    """グローバル利用者ページ (meta) からBot運用者を取得する"""
+
+    meta_api = "https://meta.wikimedia.org/w/api.php"
+    params = {
+        "action": "query",
+        "prop": "revisions",
+        "titles": f"User:{user}",
+        "rvprop": "content",
+        "rvslots": "main",
+        "formatversion": "2",
+        "format": "json",
+    }
+    headers = {"User-Agent": "mybot/1.0"}
+
+    mysleep(sleep_requests)
+    r = requests.get(meta_api, params=params, headers=headers, timeout=10.0)
+    r.raise_for_status()
+    data = r.json()
+
+    pages = data["query"]["pages"]
+    if not pages:
+        return None
+
+    revisions = pages[0].get("revisions")
+    if not revisions:
+        return None
+
+    text = revisions[0]["slots"]["main"]["content"]
+
+    m = re.search(
+        r"\{\{\s*Bot\b(?:(?!\}\}).)*?\|\s*(?![^|}]*=)([^|}\n]+)",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if m:
+        print(f"operator found on meta. from {{{{BOT}}}}: {m.group(1).strip()}")
+        return m.group(1).strip()
+
+    m = re.search(
+        r"\|\s*運用者\s*=\s*\[\[(?:[Uu]ser:|利用者:)?([^|\]]+)",
+        text,
+    )
+    if m:
+        print(f"operator found on meta. from 運用者: {m.group(1).strip()}")
+        return m.group(1).strip()
+
+    return None
+
+
 def get_bot_operator(user, sleep_requests):
     """Bot運用者を取得"""
     print(f"get_bot_operator() start! user={user}")
@@ -133,6 +183,10 @@ def get_bot_operator(user, sleep_requests):
     if m:
         print(f"operator found. from 運用者: {m.group(1).strip()}")
         return m.group(1).strip()
+
+    operator = get_bot_operator_global(user, sleep_requests)
+    if operator:
+        return operator
 
     operator = get_bot_operator_by_table(user)
     if operator:
@@ -320,7 +374,9 @@ th {
 
         for role in all_result:
             display_name = ROLE_NAMES.get(role) or role
-            fp.write(f'<li><a href="#{role}">{html.escape(display_name)}({role})</a></li>\n')
+            fp.write(
+                f'<li><a href="#{role}">{html.escape(display_name)}({role})</a></li>\n'
+            )
 
         fp.write("""</ul>
 </nav>
@@ -335,7 +391,7 @@ th {
 
         for role, result in all_result.items():
             display_name = ROLE_NAMES.get(role) or role
-            fp.write(f"<h2 id=\"{role}\">{html.escape(display_name)}({role})</h2>\n")
+            fp.write(f'<h2 id="{role}">{html.escape(display_name)}({role})</h2>\n')
             # fp.write(f"<h2>{html.escape(role)}</h2>\n")
             fp.write("<table>\n")
 
@@ -359,7 +415,7 @@ th {
 
                 if operator:
                     op_url = f"https://ja.wikipedia.org/wiki/利用者:{operator}"
-                    op_html = f"<a href='{op_url}'>{html.escape(operator)}</a>"
+                    op_html = f"<a href='{op_url}' target='_blank'>{html.escape(operator)}</a>"
                 else:
                     op_html = ""
 
