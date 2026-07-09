@@ -258,6 +258,45 @@ def write_html(all_result, filename="report.html"):
 <style>
 body {
     font-family: sans-serif;
+    margin: 0;
+}
+#wrapper {
+    display: flex;
+}
+#sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: #f8f9fa;
+    padding: 16px;
+    border-right: 1px solid #ccc;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+#sidebar h2 {
+    font-size: 16px;
+    margin: 0 0 12px;
+}
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#sidebar li {
+    margin-bottom: 6px;
+}
+#sidebar a {
+    text-decoration: none;
+    color: #0645ad;
+}
+#sidebar a:hover {
+    text-decoration: underline;
+}
+#content {
+    flex: 1;
+    padding: 16px 24px;
 }
 table {
     border-collapse: collapse;
@@ -273,6 +312,19 @@ th {
 </style>
 </head>
 <body>
+<div id="wrapper">
+<nav id="sidebar">
+<h2>目次</h2>
+<ul>
+""")
+
+        for role in all_result:
+            display_name = ROLE_NAMES.get(role) or role
+            fp.write(f'<li><a href="#{role}">{html.escape(display_name)}({role})</a></li>\n')
+
+        fp.write("""</ul>
+</nav>
+<div id="content">
 <h1>Wikipedia管理者最終編集一覧</h1>
 """)
 
@@ -283,7 +335,7 @@ th {
 
         for role, result in all_result.items():
             display_name = ROLE_NAMES.get(role) or role
-            fp.write(f"<h2>{html.escape(display_name)}({role})</h2>\n")
+            fp.write(f"<h2 id=\"{role}\">{html.escape(display_name)}({role})</h2>\n")
             # fp.write(f"<h2>{html.escape(role)}</h2>\n")
             fp.write("<table>\n")
 
@@ -330,7 +382,7 @@ th {
 
             fp.write("</table>\n")
 
-        fp.write("</body>\n</html>\n")
+        fp.write("</div>\n</div>\n</body>\n</html>\n")
 
 
 def main():
