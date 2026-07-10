@@ -357,7 +357,6 @@ body {
 table {
     border-collapse: collapse;
     margin-bottom: 2em;
-    width: 100%;
 }
 th, td {
     border: 1px solid #ccc;
@@ -402,6 +401,9 @@ th {
     }
     #content {
         padding: 12px;
+    }
+    table {
+        width: 100%;
     }
     th, td {
         padding: 4px 6px;
