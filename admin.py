@@ -308,6 +308,7 @@ def write_html(all_result, filename="report.html"):
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>利用者最終編集一覧</title>
 <style>
 body {
@@ -351,21 +352,65 @@ body {
 #content {
     flex: 1;
     padding: 16px 24px;
+    min-width: 0;
 }
 table {
     border-collapse: collapse;
     margin-bottom: 2em;
+    width: 100%;
 }
 th, td {
     border: 1px solid #ccc;
     padding: 4px 8px;
+    white-space: nowrap;
 }
 th {
     background: #eee;
 }
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+#menu-toggle {
+    display: none;
+    background: #f8f9fa;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 8px;
+    border-radius: 4px;
+}
+@media (max-width: 768px) {
+    #wrapper {
+        flex-direction: column;
+    }
+    #sidebar {
+        width: 100%;
+        min-width: unset;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+        display: none;
+    }
+    #sidebar.open {
+        display: block;
+    }
+    #menu-toggle {
+        display: inline-block;
+    }
+    #content {
+        padding: 12px;
+    }
+    th, td {
+        padding: 4px 6px;
+    }
+}
 </style>
 </head>
 <body>
+<button id="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776; 目次</button>
 <div id="wrapper">
 <nav id="sidebar">
 <h2>目次</h2>
@@ -393,7 +438,7 @@ th {
             display_name = ROLE_NAMES.get(role) or role
             fp.write(f'<h2 id="{role}">{html.escape(display_name)}({role})</h2>\n')
             # fp.write(f"<h2>{html.escape(role)}</h2>\n")
-            fp.write("<table>\n")
+            fp.write('<div class="table-wrap">\n<table>\n')
 
             if role == "bot":
                 fp.write(
@@ -436,7 +481,7 @@ th {
                         "</tr>\n"
                     )
 
-            fp.write("</table>\n")
+            fp.write("</table>\n</div>\n")
 
         fp.write("</div>\n</div>\n</body>\n</html>\n")
 
