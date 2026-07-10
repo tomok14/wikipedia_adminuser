@@ -433,7 +433,9 @@ th {
         jst = ZoneInfo("Asia/Tokyo")
         now = datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S %Z")
         fp.write(f"<p>更新日時: {html.escape(now)} </p>\n")
-        fp.write('<p style="color:#c00;font-weight:bold">※赤色の背景は最終編集から1年以上経過していることを示します</p>\n')
+        fp.write(
+            '<p style="color:#c00;font-weight:bold">※赤色の背景は最終編集から1年以上経過していることを示します</p>\n'
+        )
 
         for role, result in all_result.items():
             display_name = ROLE_NAMES.get(role) or role
@@ -504,7 +506,7 @@ def main():
     if args.t:
         ROLE_NAMES = {
             "suppress": "オーバーサイト",
-            "bot": "BOT",
+            # "bot": "BOT",
         }
 
     all_result = {}
