@@ -32,6 +32,7 @@ WIKIS = {
         "roles": {
             "sysop": "管理者",
             "bureaucrat": "ビューロクラット",
+            "bot": "BOT",
         },
     },
 }
@@ -437,7 +438,7 @@ th {
 
         for wiki_key, roles_result in all_result.items():
             wiki_name = wikis_config[wiki_key]["name"]
-            fp.write(f'<li><strong>{html.escape(wiki_name)}</strong></li>\n')
+            fp.write(f"<li><strong>{html.escape(wiki_name)}</strong></li>\n")
             for role in roles_result:
                 display_name = wikis_config[wiki_key]["roles"].get(role) or role
                 fp.write(
@@ -467,7 +468,9 @@ th {
 
             for role, result in roles_result.items():
                 display_name = roles.get(role) or role
-                fp.write(f'<h3 id="{wiki_key}-{role}">{html.escape(display_name)}({role})</h3>\n')
+                fp.write(
+                    f'<h3 id="{wiki_key}-{role}">{html.escape(display_name)}({role})</h3>\n'
+                )
                 fp.write('<div class="table-wrap">\n<table>\n')
 
                 if role == "bot":
@@ -520,8 +523,12 @@ def main():
     """main"""
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", action="store_true", help="テストモード")
-    parser.add_argument("--wiki", choices=["wikipedia", "wiktionary", "all"], default="all",
-                        help="対象ウィキ (default: all)")
+    parser.add_argument(
+        "--wiki",
+        choices=["wikipedia", "wiktionary", "all"],
+        default="all",
+        help="対象ウィキ (default: all)",
+    )
     args = parser.parse_args()
 
     if args.t:
@@ -542,7 +549,9 @@ def main():
         print(f"\n=== {wiki_config['name']} ===")
         all_result[wiki_key] = {}
         for role in wiki_config["roles"]:
-            all_result[wiki_key][role] = proc_role(role, sleep_requests, args, wiki_config)
+            all_result[wiki_key][role] = proc_role(
+                role, sleep_requests, args, wiki_config
+            )
             mysleep(sleep_per_role)
 
     write_html(all_result, WIKIS)
