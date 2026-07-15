@@ -6,11 +6,11 @@ Wikipedia/Wiktionary管理者の活動状況を調べる
 import time
 import re
 import argparse
-import requests
-import mwparserfromhell
+from datetime import datetime
 from zoneinfo import ZoneInfo
 import html
-from datetime import datetime
+import requests
+import mwparserfromhell
 
 WIKIS = {
     "wikipedia": {
@@ -39,6 +39,7 @@ WIKIS = {
 
 
 def mysleep(sec):
+    """sleep"""
     print(f"sleep({sec})")
     time.sleep(sec)
 
@@ -142,7 +143,7 @@ def get_bot_operator_global(user, sleep_requests):
     return None
 
 
-def get_bot_operator(user, sleep_requests, api_url):
+def get_bot_operator(user, sleep_requests, api_url, wiki_key):
     """Bot運用者を取得"""
     print(f"get_bot_operator() start! user={user}")
     params = {
@@ -175,13 +176,19 @@ def get_bot_operator(user, sleep_requests, api_url):
     print(f"len(text)={len(text)}")
 
     # {{Bot|Akas1950}}から持ってくる
-    # m = re.search(
-    #     r"\{\{\s*Bot\s*\|\s*([^|}\n]+)",
-    #     text,
-    #     flags=re.IGNORECASE | re.DOTALL,
-    # )
     m = re.search(
         r"\{\{\s*Bot\b(?:(?!\}\}).)*?\|\s*(?![^|}]*=)([^|}\n]+)",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if m:
+        print(f"operator found. from {{{{BOT}}}}: {m.group(1).strip()}")
+        return m.group(1).strip()
+
+    # Wiktionary用
+    # {{User Bot|Akas1950}}から持ってくる
+    m = re.search(
+        r"\{\{\s*User Bot\b(?:(?!\}\}).)*?\|\s*(?![^|}]*=)([^|}\n]+)",
         text,
         flags=re.IGNORECASE | re.DOTALL,
     )
@@ -204,9 +211,10 @@ def get_bot_operator(user, sleep_requests, api_url):
     if operator:
         return operator
 
-    operator = get_bot_operator_by_table(user, api_url)
-    if operator:
-        return operator
+    if wiki_key == "wikipedia":
+        operator = get_bot_operator_by_table(user, api_url)
+        if operator:
+            return operator
 
     print(f"operator not found. {user}")
     return None
@@ -270,7 +278,7 @@ def get_last_edit(user, sleep_requests, api_url):
     return contribs[0]["timestamp"]
 
 
-def proc_role(role, sleep_requests, args, wiki_config):
+def proc_role(role, sleep_requests, args, wiki_config, wiki_key):
     """role毎の処理"""
     api_url = wiki_config["api"]
     users = get_admin_users(role, sleep_requests, api_url)
@@ -289,7 +297,7 @@ def proc_role(role, sleep_requests, args, wiki_config):
         operator_ts = None
 
         if role == "bot":
-            operator = get_bot_operator(user, sleep_requests, api_url)
+            operator = get_bot_operator(user, sleep_requests, api_url, wiki_key)
 
             if operator:
                 operator_ts = get_last_edit(operator, sleep_requests, api_url)
@@ -304,6 +312,7 @@ def proc_role(role, sleep_requests, args, wiki_config):
 
 
 def format_ts(ts):
+    """日時のフォーマット"""
     if ts:
         dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
         age = datetime.now(dt.tzinfo) - dt
@@ -442,7 +451,8 @@ th {
             for role in roles_result:
                 display_name = wikis_config[wiki_key]["roles"].get(role) or role
                 fp.write(
-                    f'<li style="margin-left:1em;"><a href="#{wiki_key}-{role}">{html.escape(display_name)}({role})</a></li>\n'
+                    f'<li style="margin-left:1em;">'
+                    f'<a href="#{wiki_key}-{role}">{html.escape(display_name)}({role})</a></li>\n'
                 )
 
         fp.write("""</ul>
@@ -550,7 +560,7 @@ def main():
         all_result[wiki_key] = {}
         for role in wiki_config["roles"]:
             all_result[wiki_key][role] = proc_role(
-                role, sleep_requests, args, wiki_config
+                role, sleep_requests, args, wiki_config, wiki_key
             )
             mysleep(sleep_per_role)
 
