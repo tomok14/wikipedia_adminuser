@@ -50,7 +50,7 @@ def mysleep(sec):
 TITLE = "Wikipedia:Bot/ステータス"
 
 
-def get_bot_operator_by_table(bot_name: str, api_url: str) -> str | None:
+def get_bot_operator_by_ichiran_page(bot_name: str, api_url: str) -> str | None:
     """ボット名から運用者を取得する"""
 
     params = {
@@ -143,9 +143,7 @@ def get_bot_operator_global(user, sleep_requests):
     return None
 
 
-def get_bot_operator(user, sleep_requests, api_url, wiki_key):
-    """Bot運用者を取得"""
-    print(f"get_bot_operator() start! user={user}")
+def get_bot_operator_localsite(user, sleep_requests, api_url):
     params = {
         "action": "query",
         "prop": "revisions",
@@ -207,12 +205,23 @@ def get_bot_operator(user, sleep_requests, api_url, wiki_key):
         print(f"operator found. from 運用者: {m.group(1).strip()}")
         return m.group(1).strip()
 
+    return None
+
+
+def get_bot_operator(user, sleep_requests, api_url, wiki_key):
+    """Bot運用者を取得"""
+    print(f"get_bot_operator() start! user={user}")
+
+    operator = get_bot_operator_localsite(user, sleep_requests, api_url)
+    if operator:
+        return operator
+
     operator = get_bot_operator_global(user, sleep_requests)
     if operator:
         return operator
 
     if wiki_key == "wikipedia":
-        operator = get_bot_operator_by_table(user, api_url)
+        operator = get_bot_operator_by_ichiran_page(user, api_url)
         if operator:
             return operator
 
