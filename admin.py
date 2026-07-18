@@ -140,6 +140,14 @@ def get_bot_operator_global(user, sleep_requests):
         print(f"operator found on meta. from 運用者: {m.group(1).strip()}")
         return m.group(1).strip()
 
+    m = re.search(
+        r"operated by \[\[[^\]]+:([0-9A-Za-z\s\.-]+)[\|\]]",
+        text,
+    )
+    if m:
+        print(f"operator found on meta. from operated by: {m.group(1).strip()}")
+        return m.group(1).strip()
+
     return None
 
 
@@ -175,7 +183,7 @@ def get_bot_operator_localsite(user, sleep_requests, api_url):
 
     # {{Bot|Akas1950}}から持ってくる
     m = re.search(
-        r"\{\{\s*Bot\b(?:(?!\}\}).)*?\|\s*(?![^|}]*=)([^|}\n]+)",
+        r"\{\{\s*(?:Bot|user_bot)\b(?:(?!\}\}).)*?\|\s*(?![^|}]*=)([^|}\n]+)",
         text,
         flags=re.IGNORECASE | re.DOTALL,
     )
@@ -200,9 +208,16 @@ def get_bot_operator_localsite(user, sleep_requests, api_url):
         r"\|\s*運用者\s*=\s*\[\[(?:[Uu]ser:|利用者:)?([^|\]]+)",
         text,
     )
-
     if m:
         print(f"operator found. from 運用者: {m.group(1).strip()}")
+        return m.group(1).strip()
+
+    m = re.search(
+        r"operated by \[\[[^\]]+:([0-9A-Za-z\s\.-]+)[\|\]]",
+        text,
+    )
+    if m:
+        print(f"operator found on local. from operated by: {m.group(1).strip()}")
         return m.group(1).strip()
 
     return None
@@ -211,6 +226,20 @@ def get_bot_operator_localsite(user, sleep_requests, api_url):
 def get_bot_operator(user, sleep_requests, api_url, wiki_key):
     """Bot運用者を取得"""
     print(f"get_bot_operator() start! user={user}")
+
+    # 予め分かっているBOT
+    BOT_OWNERS = {
+        "Ninomybot": "Ninomy",
+        "RoggBot": "Roggy",
+        "Interwicket": "Robert Ullmann",
+        "SpaceBirdyBot": "Spacebirdy",
+        "MonoBot~jawiktionary": "Monobi",
+        "RobotGMwikt": "GerardM",
+    }
+
+    owner = BOT_OWNERS.get(user)
+    if owner is not None:
+        return owner
 
     operator = get_bot_operator_localsite(user, sleep_requests, api_url)
     if operator:
