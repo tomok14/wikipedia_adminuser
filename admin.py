@@ -3,14 +3,15 @@
 Wikipedia/Wiktionary管理者の活動状況を調べる
 """
 
-import time
-import re
 import argparse
+import html
+import re
+import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
-import html
-import requests
+
 import mwparserfromhell
+import requests
 
 WIKIS = {
     "wikipedia": {
@@ -42,9 +43,6 @@ def mysleep(sec):
     """sleep"""
     print(f"sleep({sec})")
     time.sleep(sec)
-
-
-#!/usr/bin/env python3
 
 
 TITLE = "Wikipedia:Bot/ステータス"
@@ -325,9 +323,8 @@ def proc_role(role, sleep_requests, args, wiki_config, wiki_key):
     for i, user in enumerate(users):
         print(f"{i}, {role}: {user}")
 
-        if args.t:
-            if i > 2:
-                break
+        if args.t and i > 2:
+            break
 
         ts = get_last_edit(user, sleep_requests, api_url)
 
