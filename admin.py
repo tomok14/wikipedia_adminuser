@@ -353,13 +353,13 @@ def format_ts(ts):
         age = datetime.now(dt.tzinfo) - dt
         style = ""
         if age.days >= 365:
-            style = " style='background-color:#ffcccc'"
+            style = " class='old'"
         return (
             dt.strftime("%Y-%m-%d %H:%M:%S UTC"),
             style,
         )
 
-    return ("編集なし", " style='background-color:#ffcccc'")
+    return ("編集なし", " class='old'")
 
 
 def write_html(all_result, wikis_config, filename="report.html"):
@@ -372,9 +372,35 @@ def write_html(all_result, wikis_config, filename="report.html"):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>利用者最終編集一覧</title>
 <style>
+:root {
+    --bg: #ffffff;
+    --text: #202122;
+    --sidebar-bg: #f8f9fa;
+    --border: #ccc;
+    --th-bg: #eee;
+    --link: #0645ad;
+    --old-bg: #ffcccc;
+    --warn: #c00;
+    --menu-bg: #f8f9fa;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1e1e1e;
+        --text: #e6e6e6;
+        --sidebar-bg: #262626;
+        --border: #444;
+        --th-bg: #2f2f2f;
+        --link: #7aa2f7;
+        --old-bg: #7f1d1d;
+        --warn: #ff9a9a;
+        --menu-bg: #262626;
+    }
+}
 body {
     font-family: sans-serif;
     margin: 0;
+    background: var(--bg);
+    color: var(--text);
 }
 #wrapper {
     display: flex;
@@ -382,9 +408,9 @@ body {
 #sidebar {
     width: 220px;
     min-width: 220px;
-    background: #f8f9fa;
+    background: var(--sidebar-bg);
     padding: 16px;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid var(--border);
     position: sticky;
     top: 0;
     height: 100vh;
@@ -405,7 +431,7 @@ body {
 }
 #sidebar a {
     text-decoration: none;
-    color: #0645ad;
+    color: var(--link);
 }
 #sidebar a:hover {
     text-decoration: underline;
@@ -415,17 +441,27 @@ body {
     padding: 16px 24px;
     min-width: 0;
 }
+#content a {
+    color: var(--link);
+}
 table {
     border-collapse: collapse;
     margin-bottom: 2em;
 }
 th, td {
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
     padding: 4px 8px;
     white-space: nowrap;
 }
 th {
-    background: #eee;
+    background: var(--th-bg);
+}
+.old {
+    background: var(--old-bg);
+}
+.warn {
+    color: var(--warn);
+    font-weight: bold;
 }
 .table-wrap {
     overflow-x: auto;
@@ -433,13 +469,14 @@ th {
 }
 #menu-toggle {
     display: none;
-    background: #f8f9fa;
-    border: 1px solid #ccc;
+    background: var(--menu-bg);
+    border: 1px solid var(--border);
     padding: 8px 16px;
     font-size: 16px;
     cursor: pointer;
     margin: 8px;
     border-radius: 4px;
+    color: var(--text);
 }
 @media (max-width: 768px) {
     #wrapper {
@@ -451,7 +488,7 @@ th {
         height: auto;
         position: relative;
         border-right: none;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid var(--border);
         display: none;
     }
     #sidebar.open {
@@ -501,7 +538,7 @@ th {
         now = datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S %Z")
         fp.write(f"<p>更新日時: {html.escape(now)} </p>\n")
         fp.write(
-            '<p style="color:#c00;font-weight:bold">※赤色の背景は最終編集から1年以上経過していることを示します</p>\n'
+            '<p class="warn">※赤色の背景は最終編集から1年以上経過していることを示します</p>\n'
         )
 
         for wiki_key, roles_result in all_result.items():
