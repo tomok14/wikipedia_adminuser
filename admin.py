@@ -362,243 +362,135 @@ def format_ts(ts):
     return ("編集なし", " class='old'")
 
 
-def write_html(all_result, wikis_config, filename="report.html"):
-    """最終html生成"""
-    with open(filename, "w", encoding="utf-8") as fp:
-        fp.write("""<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>利用者最終編集一覧</title>
-<style>
-:root {
-    --bg: #ffffff;
-    --text: #202122;
-    --sidebar-bg: #f8f9fa;
-    --border: #ccc;
-    --th-bg: #eee;
-    --link: #0645ad;
-    --old-bg: #ffcccc;
-    --warn: #c00;
-    --menu-bg: #f8f9fa;
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #1e1e1e;
-        --text: #e6e6e6;
-        --sidebar-bg: #262626;
-        --border: #444;
-        --th-bg: #2f2f2f;
-        --link: #7aa2f7;
-        --old-bg: #7f1d1d;
-        --warn: #ff9a9a;
-        --menu-bg: #262626;
-    }
-}
-body {
-    font-family: sans-serif;
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-}
-#wrapper {
-    display: flex;
-}
-#sidebar {
-    width: 220px;
-    min-width: 220px;
-    background: var(--sidebar-bg);
-    padding: 16px;
-    border-right: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-#sidebar h2 {
-    font-size: 16px;
-    margin: 0 0 12px;
-}
-#sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-#sidebar li {
-    margin-bottom: 6px;
-}
-#sidebar a {
-    text-decoration: none;
-    color: var(--link);
-}
-#sidebar a:hover {
-    text-decoration: underline;
-}
-#content {
-    flex: 1;
-    padding: 16px 24px;
-    min-width: 0;
-}
-#content a {
-    color: var(--link);
-}
-table {
-    border-collapse: collapse;
-    margin-bottom: 2em;
-}
-th, td {
-    border: 1px solid var(--border);
-    padding: 4px 8px;
-    white-space: nowrap;
-}
-th {
-    background: var(--th-bg);
-}
-.old {
-    background: var(--old-bg);
-}
-.warn {
-    color: var(--warn);
-    font-weight: bold;
-}
-.table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-#menu-toggle {
-    display: none;
-    background: var(--menu-bg);
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 8px;
-    border-radius: 4px;
-    color: var(--text);
-}
-@media (max-width: 768px) {
-    #wrapper {
-        flex-direction: column;
-    }
-    #sidebar {
-        width: 100%;
-        min-width: unset;
-        height: auto;
-        position: relative;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        display: none;
-    }
-    #sidebar.open {
-        display: block;
-    }
-    #menu-toggle {
-        display: inline-block;
-    }
-    #content {
-        padding: 12px;
-    }
-    table {
-        width: 100%;
-    }
-    th, td {
-        padding: 4px 6px;
-    }
-}
-</style>
-</head>
-<body>
-<button id="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776; 目次</button>
-<div id="wrapper">
+def write_navi(all_result, wikis_config, fp):
+    """navi部分html出力"""
+    fp.write("""
 <nav id="sidebar">
 <h2>目次</h2>
 <ul>
 """)
 
-        for wiki_key, roles_result in all_result.items():
-            wiki_name = wikis_config[wiki_key]["name"]
-            fp.write(f"<li><strong>{html.escape(wiki_name)}</strong></li>\n")
-            for role in roles_result:
-                display_name = wikis_config[wiki_key]["roles"].get(role) or role
-                fp.write(
-                    f'<li style="margin-left:1em;">'
-                    f'<a href="#{wiki_key}-{role}">{html.escape(display_name)}({role})</a></li>\n'
-                )
+    for wiki_key, roles_result in all_result.items():
+        wiki_name = wikis_config[wiki_key]["name"]
+        fp.write(f"<li><strong>{html.escape(wiki_name)}</strong></li>\n")
+        for role in roles_result:
+            display_name = wikis_config[wiki_key]["roles"].get(role) or role
+            fp.write(
+                f'<li style="margin-left:1em;">'
+                f'<a href="#{wiki_key}-{role}">'
+                f"{html.escape(display_name)}({role})</a></li>\n"
+            )
 
-        fp.write("""</ul>
+    fp.write("""</ul>
 </nav>
+""")
+
+
+def write_role_table(role, result, user_url_template, fp):
+    """role部分html出力"""
+    fp.write('<div class="table-wrap">\n<table>\n')
+
+    if role == "bot":
+        fp.write(
+            "<tr>"
+            "<th>利用者</th>"
+            "<th>最終編集日時</th>"
+            "<th>運用者</th>"
+            "<th>運用者最終編集</th>"
+            "</tr>\n"
+        )
+    else:
+        fp.write("<tr><th>利用者</th><th>最終編集日時</th></tr>\n")
+
+    for user, ts, operator, operator_ts in result:
+        ts_str, old_style = format_ts(ts)
+        op_ts_str, op_old_style = format_ts(operator_ts)
+
+        url = user_url_template.format(user)
+
+        if operator:
+            op_url = user_url_template.format(operator)
+            op_html = f"<a href='{op_url}' target='_blank'>{html.escape(operator)}</a>"
+        else:
+            op_html = ""
+
+        if role == "bot":
+            fp.write(
+                "<tr>"
+                f"<td><a href='{url}'>{html.escape(user)}</a></td>"
+                f"<td{old_style}>{html.escape(ts_str)}</td>"
+                f"<td>{op_html}</td>"
+                f"<td{op_old_style}>{html.escape(op_ts_str)}</td>"
+                "</tr>\n"
+            )
+        else:
+            fp.write(
+                "<tr>"
+                f"<td><a href='{url}'>{html.escape(user)}</a></td>"
+                f"<td{old_style}>{html.escape(ts_str)}</td>"
+                "</tr>\n"
+            )
+
+    fp.write("</table>\n</div>\n")
+
+
+def write_header(fp):
+    """ヘッダ部分html出力"""
+    fp.write("""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>利用者最終編集一覧</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button id="menu-toggle" onclick="document.getElementById('sidebar')
+.classList.toggle('open')">&#9776; 目次</button>
+<div id="wrapper">
+""")
+
+
+def write_contents(all_result, wikis_config, fp):
+    """内容部分html出力"""
+    fp.write("""
 <div id="content">
 <h1>管理者最終編集一覧</h1>
 """)
 
-        # 更新日時
-        jst = ZoneInfo("Asia/Tokyo")
-        now = datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S %Z")
-        fp.write(f"<p>更新日時: {html.escape(now)} </p>\n")
-        fp.write(
-            '<p class="warn">※赤色の背景は最終編集から1年以上経過していることを示します</p>\n'
-        )
+    # 更新日時
+    jst = ZoneInfo("Asia/Tokyo")
+    now = datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S %Z")
+    fp.write(f"<p>更新日時: {html.escape(now)} </p>\n")
+    fp.write(
+        '<p class="warn">※赤色の背景は最終編集から'
+        "1年以上経過していることを示します</p>\n"
+    )
 
-        for wiki_key, roles_result in all_result.items():
-            wiki_name = wikis_config[wiki_key]["name"]
-            user_url_template = wikis_config[wiki_key]["user_url"]
-            roles = wikis_config[wiki_key]["roles"]
+    for wiki_key, roles_result in all_result.items():
+        wiki_name = wikis_config[wiki_key]["name"]
+        user_url_template = wikis_config[wiki_key]["user_url"]
+        roles = wikis_config[wiki_key]["roles"]
 
-            fp.write(f'<h2 id="{wiki_key}">{html.escape(wiki_name)}</h2>\n')
+        fp.write(f'<h2 id="{wiki_key}">{html.escape(wiki_name)}</h2>\n')
 
-            for role, result in roles_result.items():
-                display_name = roles.get(role) or role
-                fp.write(
-                    f'<h3 id="{wiki_key}-{role}">{html.escape(display_name)}({role})</h3>\n'
-                )
-                fp.write('<div class="table-wrap">\n<table>\n')
+        for role, result in roles_result.items():
+            display_name = roles.get(role) or role
+            fp.write(
+                f'<h3 id="{wiki_key}-{role}">{html.escape(display_name)}({role})</h3>\n'
+            )
 
-                if role == "bot":
-                    fp.write(
-                        "<tr>"
-                        "<th>利用者</th>"
-                        "<th>最終編集日時</th>"
-                        "<th>運用者</th>"
-                        "<th>運用者最終編集</th>"
-                        "</tr>\n"
-                    )
-                else:
-                    fp.write("<tr><th>利用者</th><th>最終編集日時</th></tr>\n")
+            write_role_table(role, result, user_url_template, fp)
 
-                for user, ts, operator, operator_ts in result:
-                    ts_str, old_style = format_ts(ts)
-                    op_ts_str, op_old_style = format_ts(operator_ts)
+    fp.write("</div>\n</div>\n</body>\n</html>\n")
 
-                    url = user_url_template.format(user)
 
-                    if operator:
-                        op_url = user_url_template.format(operator)
-                        op_html = f"<a href='{op_url}' target='_blank'>{html.escape(operator)}</a>"
-                    else:
-                        op_html = ""
-
-                    if role == "bot":
-                        fp.write(
-                            "<tr>"
-                            f"<td><a href='{url}'>{html.escape(user)}</a></td>"
-                            f"<td{old_style}>{html.escape(ts_str)}</td>"
-                            f"<td>{op_html}</td>"
-                            f"<td{op_old_style}>{html.escape(op_ts_str)}</td>"
-                            "</tr>\n"
-                        )
-                    else:
-                        fp.write(
-                            "<tr>"
-                            f"<td><a href='{url}'>{html.escape(user)}</a></td>"
-                            f"<td{old_style}>{html.escape(ts_str)}</td>"
-                            "</tr>\n"
-                        )
-
-                fp.write("</table>\n</div>\n")
-
-        fp.write("</div>\n</div>\n</body>\n</html>\n")
+def write_html(all_result, wikis_config, filename="report.html"):
+    """最終html生成"""
+    with open(filename, "w", encoding="utf-8") as fp:
+        write_header(fp)
+        write_navi(all_result, wikis_config, fp)
+        write_contents(all_result, wikis_config, fp)
 
 
 def main():
