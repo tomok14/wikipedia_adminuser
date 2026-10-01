@@ -4,147 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>利用者最終編集一覧</title>
-<style>
-:root {
-    --bg: #ffffff;
-    --text: #202122;
-    --sidebar-bg: #f8f9fa;
-    --border: #ccc;
-    --th-bg: #eee;
-    --link: #0645ad;
-    --old-bg: #ffcccc;
-    --warn: #c00;
-    --menu-bg: #f8f9fa;
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #1e1e1e;
-        --text: #e6e6e6;
-        --sidebar-bg: #262626;
-        --border: #444;
-        --th-bg: #2f2f2f;
-        --link: #7aa2f7;
-        --old-bg: #7f1d1d;
-        --warn: #ff9a9a;
-        --menu-bg: #262626;
-    }
-}
-body {
-    font-family: sans-serif;
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-}
-#wrapper {
-    display: flex;
-}
-#sidebar {
-    width: 220px;
-    min-width: 220px;
-    background: var(--sidebar-bg);
-    padding: 16px;
-    border-right: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-#sidebar h2 {
-    font-size: 16px;
-    margin: 0 0 12px;
-}
-#sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-#sidebar li {
-    margin-bottom: 6px;
-}
-#sidebar a {
-    text-decoration: none;
-    color: var(--link);
-}
-#sidebar a:hover {
-    text-decoration: underline;
-}
-#content {
-    flex: 1;
-    padding: 16px 24px;
-    min-width: 0;
-}
-#content a {
-    color: var(--link);
-}
-table {
-    border-collapse: collapse;
-    margin-bottom: 2em;
-}
-th, td {
-    border: 1px solid var(--border);
-    padding: 4px 8px;
-    white-space: nowrap;
-}
-th {
-    background: var(--th-bg);
-}
-.old {
-    background: var(--old-bg);
-}
-.warn {
-    color: var(--warn);
-    font-weight: bold;
-}
-.table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-#menu-toggle {
-    display: none;
-    background: var(--menu-bg);
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 8px;
-    border-radius: 4px;
-    color: var(--text);
-}
-@media (max-width: 768px) {
-    #wrapper {
-        flex-direction: column;
-    }
-    #sidebar {
-        width: 100%;
-        min-width: unset;
-        height: auto;
-        position: relative;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        display: none;
-    }
-    #sidebar.open {
-        display: block;
-    }
-    #menu-toggle {
-        display: inline-block;
-    }
-    #content {
-        padding: 12px;
-    }
-    table {
-        width: 100%;
-    }
-    th, td {
-        padding: 4px 6px;
-    }
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<button id="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776; 目次</button>
+<button id="menu-toggle" onclick="document.getElementById('sidebar')
+.classList.toggle('open')">&#9776; 目次</button>
 <div id="wrapper">
+
 <nav id="sidebar">
 <h2>目次</h2>
 <ul>
@@ -160,54 +26,53 @@ th {
 <li style="margin-left:1em;"><a href="#wiktionary-bot">BOT(bot)</a></li>
 </ul>
 </nav>
+
 <div id="content">
 <h1>管理者最終編集一覧</h1>
-<p>更新日時: 2026-09-01 13:00:49 JST </p>
+<p>更新日時: 2026-10-01 13:25:13 JST </p>
 <p class="warn">※赤色の背景は最終編集から1年以上経過していることを示します</p>
 <h2 id="wikipedia">Wikipedia</h2>
 <h3 id="wikipedia-sysop">管理者(sysop)</h3>
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:えのきだたもつ'>えのきだたもつ</a></td><td>2026-09-01 02:14:11 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Kinori'>Kinori</a></td><td>2026-09-01 02:03:31 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:ネイ'>ネイ</a></td><td>2026-09-01 01:56:28 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Muyo'>Muyo</a></td><td>2026-09-01 01:20:51 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Sumaru'>Sumaru</a></td><td>2026-09-01 01:17:00 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:舌先現象になります'>舌先現象になります</a></td><td>2026-08-31 23:49:00 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Nnh'>Nnh</a></td><td>2026-08-31 21:54:46 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Yapparina'>Yapparina</a></td><td>2026-08-31 20:46:02 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:柏尾菓子'>柏尾菓子</a></td><td>2026-10-01 02:59:59 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:えのきだたもつ'>えのきだたもつ</a></td><td>2026-10-01 02:53:51 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez'>Dragoniez</a></td><td>2026-10-01 02:49:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:ネイ'>ネイ</a></td><td>2026-10-01 02:10:37 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Kubou'>Kubou</a></td><td>2026-09-30 23:07:37 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:VZP10224'>VZP10224</a></td><td>2026-09-30 22:04:44 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Halowand'>Halowand</a></td><td>2026-09-30 18:11:27 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Sumaru'>Sumaru</a></td><td>2026-09-30 17:05:07 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunsyunminmin'>Syunsyunminmin</a></td><td>2026-09-30 16:21:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Nnh'>Nnh</a></td><td>2026-09-30 15:43:06 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Marine-Blue'>Marine-Blue</a></td><td>2026-09-30 09:33:34 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Ohgi'>Ohgi</a></td><td>2026-09-30 06:44:17 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:さかおり'>さかおり</a></td><td>2026-09-30 01:59:19 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Muyo'>Muyo</a></td><td>2026-09-29 18:13:44 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Jkr2255'>Jkr2255</a></td><td>2026-09-29 12:15:04 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:コヨミヤ'>コヨミヤ</a></td><td>2026-09-29 11:55:21 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:USSR-Slav'>USSR-Slav</a></td><td>2026-09-29 10:43:21 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Yushu-kasai'>Yushu-kasai</a></td><td>2026-09-29 08:25:09 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:MaximusM4'>MaximusM4</a></td><td>2026-09-28 13:14:07 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Miya'>Miya</a></td><td>2026-09-28 05:33:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:㭍月例祭'>㭍月例祭</a></td><td>2026-09-27 16:02:28 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Taisyo'>Taisyo</a></td><td>2026-09-27 12:22:15 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:伊佐坂安物'>伊佐坂安物</a></td><td>2026-09-27 10:30:52 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:東京特許許可局'>東京特許許可局</a></td><td>2026-09-27 10:06:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:舌先現象になります'>舌先現象になります</a></td><td>2026-09-27 06:21:17 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:多摩に暇人'>多摩に暇人</a></td><td>2026-09-26 12:26:41 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Kinori'>Kinori</a></td><td>2026-09-26 03:16:11 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Faso'>Faso</a></td><td>2026-09-24 03:24:53 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:霧木諒二'>霧木諒二</a></td><td>2026-09-23 12:39:41 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-09-20 16:57:11 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Yapparina'>Yapparina</a></td><td>2026-09-20 11:14:34 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:おはぐろ蜻蛉'>おはぐろ蜻蛉</a></td><td>2026-09-04 17:00:06 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:健ちゃん'>健ちゃん</a></td><td>2026-08-31 19:29:36 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:柏尾菓子'>柏尾菓子</a></td><td>2026-08-31 18:01:03 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez'>Dragoniez</a></td><td>2026-08-31 17:01:32 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunsyunminmin'>Syunsyunminmin</a></td><td>2026-08-31 15:22:28 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:コヨミヤ'>コヨミヤ</a></td><td>2026-08-31 12:07:34 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Mt.Asahidake'>Mt.Asahidake</a></td><td>2026-08-31 11:36:07 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Yushu-kasai'>Yushu-kasai</a></td><td>2026-08-31 07:57:03 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:USSR-Slav'>USSR-Slav</a></td><td>2026-08-31 03:50:26 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Halowand'>Halowand</a></td><td>2026-08-30 16:31:23 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:霧木諒二'>霧木諒二</a></td><td>2026-08-30 14:15:38 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Faso'>Faso</a></td><td>2026-08-30 11:37:40 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:さかおり'>さかおり</a></td><td>2026-08-30 01:03:42 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:VZP10224'>VZP10224</a></td><td>2026-08-29 15:58:37 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Taisyo'>Taisyo</a></td><td>2026-08-29 11:16:40 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Ohgi'>Ohgi</a></td><td>2026-08-26 13:44:35 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:㭍月例祭'>㭍月例祭</a></td><td>2026-08-23 17:13:54 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Jkr2255'>Jkr2255</a></td><td>2026-08-23 01:27:28 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Marine-Blue'>Marine-Blue</a></td><td>2026-08-19 06:26:18 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:伊佐坂安物'>伊佐坂安物</a></td><td>2026-08-18 04:44:49 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Miya'>Miya</a></td><td>2026-08-17 15:19:47 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Penn Station'>Penn Station</a></td><td>2026-08-16 09:52:45 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Infinite0694'>Infinite0694</a></td><td>2026-08-14 09:00:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:東京特許許可局'>東京特許許可局</a></td><td>2026-08-11 11:43:44 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Kubou'>Kubou</a></td><td>2026-08-08 05:43:18 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:玄海093'>玄海093</a></td><td>2026-08-07 16:11:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:多摩に暇人'>多摩に暇人</a></td><td>2026-08-04 00:40:31 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Panpulha'>Panpulha</a></td><td>2026-08-03 00:27:21 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-07-30 11:57:58 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Araisyohei'>Araisyohei</a></td><td>2026-07-30 04:36:25 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:おはぐろ蜻蛉'>おはぐろ蜻蛉</a></td><td>2026-07-04 06:05:23 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:MaximusM4'>MaximusM4</a></td><td>2026-06-27 13:22:52 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:編集フィルター'>編集フィルター</a></td><td class='old'>編集なし</td></tr>
 </table>
 </div>
@@ -215,84 +80,78 @@ th {
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:柏尾菓子'>柏尾菓子</a></td><td>2026-08-31 18:01:03 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Mt.Asahidake'>Mt.Asahidake</a></td><td>2026-08-31 11:36:07 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Jkr2255'>Jkr2255</a></td><td>2026-08-23 01:27:28 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Infinite0694'>Infinite0694</a></td><td>2026-08-14 09:00:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-07-30 11:57:58 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:柏尾菓子'>柏尾菓子</a></td><td>2026-10-01 03:07:24 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Jkr2255'>Jkr2255</a></td><td>2026-09-29 12:15:04 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-09-20 16:57:11 UTC</td></tr>
 </table>
 </div>
 <h3 id="wikipedia-suppress">オーバーサイト(suppress)</h3>
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Ohgi'>Ohgi</a></td><td>2026-08-26 13:44:35 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Infinite0694'>Infinite0694</a></td><td>2026-08-14 09:00:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-07-30 11:57:58 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Ohgi'>Ohgi</a></td><td>2026-09-30 06:44:17 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-09-20 16:57:11 UTC</td></tr>
 </table>
 </div>
 <h3 id="wikipedia-checkuser">チェックユーザー(checkuser)</h3>
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:柏尾菓子'>柏尾菓子</a></td><td>2026-08-31 18:01:03 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez'>Dragoniez</a></td><td>2026-08-31 17:01:32 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Mt.Asahidake'>Mt.Asahidake</a></td><td>2026-08-31 11:36:07 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:さかおり'>さかおり</a></td><td>2026-08-30 01:03:42 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Infinite0694'>Infinite0694</a></td><td>2026-08-14 09:00:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-07-30 11:57:58 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez'>Dragoniez</a></td><td>2026-10-01 02:49:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:さかおり'>さかおり</a></td><td>2026-09-30 01:59:19 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC'>W.CC</a></td><td>2026-09-20 16:57:11 UTC</td></tr>
 </table>
 </div>
 <h3 id="wikipedia-bot">BOT(bot)</h3>
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th><th>運用者</th><th>運用者最終編集</th></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:DragoBot'>DragoBot</a></td><td>2026-09-01 03:00:59 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez' target='_blank'>Dragoniez</a></td><td>2026-08-31 17:01:32 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Chqaz-Bot'>Chqaz-Bot</a></td><td>2026-09-01 02:44:15 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Chqaz' target='_blank'>Chqaz</a></td><td class='old'>2025-05-20 12:33:10 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Anakabot'>Anakabot</a></td><td>2026-09-01 02:21:42 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Anaka Satamiya' target='_blank'>Anaka Satamiya</a></td><td>2026-09-01 00:02:57 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Cewbot'>Cewbot</a></td><td>2026-09-01 02:08:57 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:kanashimi' target='_blank'>kanashimi</a></td><td>2026-07-02 22:56:12 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:EmausBot'>EmausBot</a></td><td>2026-09-01 01:01:24 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Emaus' target='_blank'>Emaus</a></td><td class='old'>2025-03-31 11:12:10 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Amaybot'>Amaybot</a></td><td>2026-09-01 00:18:28 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Amayus' target='_blank'>Amayus</a></td><td>2026-08-18 15:17:20 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Asanagi-bot'>Asanagi-bot</a></td><td>2026-09-01 00:12:29 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Asanagi' target='_blank'>Asanagi</a></td><td>2026-08-25 13:39:22 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:MediaWiki message delivery'>MediaWiki message delivery</a></td><td>2026-08-31 21:53:43 UTC</td><td></td><td class='old'>編集なし</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:CommonsDelinker'>CommonsDelinker</a></td><td>2026-08-31 21:09:29 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:CommonsDelinker' target='_blank'>CommonsDelinker</a></td><td>2026-08-31 21:09:29 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:NanonaBot2'>NanonaBot2</a></td><td>2026-08-31 19:00:20 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:nanona15dobato' target='_blank'>nanona15dobato</a></td><td>2026-08-30 15:26:10 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Bcxfubot'>Bcxfubot</a></td><td>2026-08-31 16:21:06 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Bcxfu75k' target='_blank'>Bcxfu75k</a></td><td>2026-08-31 20:58:39 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Trgbot'>Trgbot</a></td><td>2026-08-31 15:02:52 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Triglav' target='_blank'>Triglav</a></td><td>2026-08-30 18:41:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SeitenBot2'>SeitenBot2</a></td><td>2026-08-31 15:00:45 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:本日晴天' target='_blank'>本日晴天</a></td><td>2026-05-10 03:43:22 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Akas1950bot'>Akas1950bot</a></td><td>2026-08-31 10:06:46 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Akas1950' target='_blank'>Akas1950</a></td><td>2026-08-30 23:39:15 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:ArchiverBot'>ArchiverBot</a></td><td>2026-08-31 08:12:59 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Whym' target='_blank'>Whym</a></td><td>2026-08-30 02:50:18 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:KiranBOT'>KiranBOT</a></td><td>2026-08-31 07:57:20 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:usernamekiran' target='_blank'>usernamekiran</a></td><td>2025-11-27 16:53:40 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:JJMC89 bot'>JJMC89 bot</a></td><td>2026-08-27 11:24:35 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:JJMC89' target='_blank'>JJMC89</a></td><td>2026-08-20 04:48:03 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Xqbot'>Xqbot</a></td><td>2026-08-26 22:52:06 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:xqt' target='_blank'>xqt</a></td><td>2026-05-22 13:51:07 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SpBot'>SpBot</a></td><td>2026-08-25 19:08:09 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Euku' target='_blank'>Euku</a></td><td class='old'>2024-01-11 22:15:32 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Leaderbot'>Leaderbot</a></td><td>2026-08-24 19:41:59 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Leaderboard' target='_blank'>Leaderboard</a></td><td>2026-02-02 19:04:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Tribot'>Tribot</a></td><td>2026-08-24 10:49:33 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Triglav' target='_blank'>Triglav</a></td><td>2026-08-30 18:41:04 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:NanonaBot'>NanonaBot</a></td><td>2026-08-16 03:41:22 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:nanona15dobato' target='_blank'>nanona15dobato</a></td><td>2026-08-30 15:26:10 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Bcxfubot'>Bcxfubot</a></td><td>2026-10-01 03:18:15 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Bcxfu75k' target='_blank'>Bcxfu75k</a></td><td>2026-09-30 19:35:44 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Chqaz-Bot'>Chqaz-Bot</a></td><td>2026-10-01 03:13:24 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Chqaz' target='_blank'>Chqaz</a></td><td class='old'>2025-05-20 12:33:10 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Cewbot'>Cewbot</a></td><td>2026-10-01 02:50:34 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:kanashimi' target='_blank'>kanashimi</a></td><td>2026-09-11 13:10:47 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:DragoBot'>DragoBot</a></td><td>2026-10-01 02:32:06 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez' target='_blank'>Dragoniez</a></td><td>2026-10-01 02:49:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Anakabot'>Anakabot</a></td><td>2026-10-01 01:15:02 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Anaka Satamiya' target='_blank'>Anaka Satamiya</a></td><td>2026-10-01 00:17:38 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Amaybot'>Amaybot</a></td><td>2026-10-01 00:17:41 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Amayus' target='_blank'>Amayus</a></td><td>2026-09-30 11:00:54 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Asanagi-bot'>Asanagi-bot</a></td><td>2026-10-01 00:11:24 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Asanagi' target='_blank'>Asanagi</a></td><td>2026-09-23 10:36:41 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:CommonsDelinker'>CommonsDelinker</a></td><td>2026-09-30 21:23:33 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:CommonsDelinker' target='_blank'>CommonsDelinker</a></td><td>2026-09-30 21:23:33 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:KiranBOT'>KiranBOT</a></td><td>2026-09-30 19:40:01 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:usernamekiran' target='_blank'>usernamekiran</a></td><td>2025-11-27 16:53:40 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SpBot'>SpBot</a></td><td>2026-09-30 19:08:17 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Euku' target='_blank'>Euku</a></td><td class='old'>2024-01-11 22:15:32 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:NanonaBot2'>NanonaBot2</a></td><td>2026-09-30 19:00:32 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:nanona15dobato' target='_blank'>nanona15dobato</a></td><td>2026-09-30 14:25:39 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:MediaWiki message delivery'>MediaWiki message delivery</a></td><td>2026-09-30 18:36:18 UTC</td><td></td><td class='old'>編集なし</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Trgbot'>Trgbot</a></td><td>2026-09-30 15:02:55 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Triglav' target='_blank'>Triglav</a></td><td>2026-09-27 16:26:48 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SeitenBot2'>SeitenBot2</a></td><td>2026-09-30 15:00:20 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:本日晴天' target='_blank'>本日晴天</a></td><td>2026-10-01 03:36:04 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:ArchiverBot'>ArchiverBot</a></td><td>2026-09-30 08:21:26 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Whym' target='_blank'>Whym</a></td><td>2026-09-12 06:06:45 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:NanonaBot'>NanonaBot</a></td><td>2026-09-30 00:27:35 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:nanona15dobato' target='_blank'>nanona15dobato</a></td><td>2026-09-30 14:25:39 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Tribot'>Tribot</a></td><td>2026-09-29 22:50:26 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Triglav' target='_blank'>Triglav</a></td><td>2026-09-27 16:26:48 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Xqbot'>Xqbot</a></td><td>2026-09-29 22:13:53 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:xqt' target='_blank'>xqt</a></td><td>2026-05-22 13:51:07 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Leaderbot'>Leaderbot</a></td><td>2026-09-27 19:42:19 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Leaderboard' target='_blank'>Leaderboard</a></td><td>2026-02-02 19:04:04 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Bsx-ja'>Bsx-ja</a></td><td>2026-09-27 15:03:55 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Bsx' target='_blank'>Bsx</a></td><td>2026-10-01 02:19:44 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:JJMC89 bot'>JJMC89 bot</a></td><td>2026-09-21 12:21:57 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:JJMC89' target='_blank'>JJMC89</a></td><td>2026-08-20 04:48:03 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Akas1950bot'>Akas1950bot</a></td><td>2026-09-18 23:30:32 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Akas1950' target='_blank'>Akas1950</a></td><td>2026-09-29 14:08:46 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:EmausBot'>EmausBot</a></td><td>2026-09-18 00:52:06 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Emaus' target='_blank'>Emaus</a></td><td class='old'>2025-03-31 11:12:10 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Balmung0731-AWB'>Balmung0731-AWB</a></td><td>2026-06-05 16:38:23 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Balmung0731' target='_blank'>Balmung0731</a></td><td>2026-06-11 10:28:35 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Bsx-ja'>Bsx-ja</a></td><td>2026-03-03 13:44:41 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Bsx' target='_blank'>Bsx</a></td><td>2026-09-01 02:52:23 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Quoxbot'>Quoxbot</a></td><td>2026-01-01 00:40:17 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Quox' target='_blank'>Quox</a></td><td>2026-08-31 06:10:41 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:YushuBot'>YushuBot</a></td><td>2025-12-14 10:11:51 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Yushu-kasai' target='_blank'>Yushu-kasai</a></td><td>2026-08-31 07:57:03 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Quoxbot'>Quoxbot</a></td><td>2026-01-01 00:40:17 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Quox' target='_blank'>Quox</a></td><td>2026-09-30 00:54:05 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:YushuBot'>YushuBot</a></td><td>2025-12-14 10:11:51 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Yushu-kasai' target='_blank'>Yushu-kasai</a></td><td>2026-09-29 08:25:09 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Maintenance script'>Maintenance script</a></td><td>2025-11-18 19:58:29 UTC</td><td></td><td class='old'>編集なし</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Dušan Kreheľ (bot)'>Dušan Kreheľ (bot)</a></td><td>2025-11-17 12:03:50 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Dušan Kreheľ' target='_blank'>Dušan Kreheľ</a></td><td>2025-11-17 12:12:16 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SeitenBot'>SeitenBot</a></td><td>2025-10-08 12:05:28 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:本日晴天' target='_blank'>本日晴天</a></td><td>2026-05-10 03:43:22 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:DrakoBot'>DrakoBot</a></td><td>2025-09-30 03:58:31 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez' target='_blank'>Dragoniez</a></td><td>2026-08-31 17:01:32 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SyunminAWB'>SyunminAWB</a></td><td class='old'>2025-03-13 09:52:24 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunsyunminmin' target='_blank'>Syunsyunminmin</a></td><td>2026-08-31 15:22:28 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunmin bot'>Syunmin bot</a></td><td class='old'>2024-11-17 17:50:35 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunsyunminmin' target='_blank'>Syunsyunminmin</a></td><td>2026-08-31 15:22:28 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:WCCbot'>WCCbot</a></td><td class='old'>2023-09-23 12:18:17 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC' target='_blank'>W.CC</a></td><td>2026-07-30 11:57:58 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SeitenBot'>SeitenBot</a></td><td>2025-10-08 12:05:28 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:本日晴天' target='_blank'>本日晴天</a></td><td>2026-10-01 03:36:04 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:DrakoBot'>DrakoBot</a></td><td class='old'>2025-09-30 03:58:31 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Dragoniez' target='_blank'>Dragoniez</a></td><td>2026-10-01 02:49:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:SyunminAWB'>SyunminAWB</a></td><td class='old'>2025-03-13 09:52:24 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunsyunminmin' target='_blank'>Syunsyunminmin</a></td><td>2026-09-30 16:21:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunmin bot'>Syunmin bot</a></td><td class='old'>2024-11-17 17:50:35 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Syunsyunminmin' target='_blank'>Syunsyunminmin</a></td><td>2026-09-30 16:21:55 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:WCCbot'>WCCbot</a></td><td class='old'>2023-09-23 12:18:17 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:W.CC' target='_blank'>W.CC</a></td><td>2026-09-20 16:57:11 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:MediaWiki default'>MediaWiki default</a></td><td class='old'>2023-07-10 08:46:11 UTC</td><td></td><td class='old'>編集なし</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Ney bot'>Ney bot</a></td><td class='old'>2022-05-01 02:21:05 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:ネイ' target='_blank'>ネイ</a></td><td>2026-09-01 01:56:28 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Ney bot'>Ney bot</a></td><td class='old'>2022-05-01 02:21:05 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:ネイ' target='_blank'>ネイ</a></td><td>2026-10-01 02:10:37 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:YuukinBot'>YuukinBot</a></td><td class='old'>2022-03-24 02:44:18 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Yuukin0248' target='_blank'>Yuukin0248</a></td><td>2026-03-08 14:10:59 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:佐藤莞嬴弐'>佐藤莞嬴弐</a></td><td class='old'>2021-10-23 23:24:52 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:佐藤莞嬴' target='_blank'>佐藤莞嬴</a></td><td>2026-07-20 13:12:00 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Sakobot'>Sakobot</a></td><td class='old'>2020-11-23 14:44:50 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Sakoppi' target='_blank'>Sakoppi</a></td><td>2026-08-31 10:03:35 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:佐藤莞嬴弐'>佐藤莞嬴弐</a></td><td class='old'>2021-10-23 23:24:52 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:佐藤莞嬴' target='_blank'>佐藤莞嬴</a></td><td>2026-09-06 12:54:11 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Sakobot'>Sakobot</a></td><td class='old'>2020-11-23 14:44:50 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Sakoppi' target='_blank'>Sakoppi</a></td><td>2026-09-28 22:45:52 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:YuukinAWB'>YuukinAWB</a></td><td class='old'>2020-09-18 12:55:47 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Yuukin0248' target='_blank'>Yuukin0248</a></td><td>2026-03-08 14:10:59 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:RxyBot'>RxyBot</a></td><td class='old'>2020-06-08 21:06:55 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:rxy' target='_blank'>rxy</a></td><td class='old'>2025-06-05 12:00:22 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Dexbot'>Dexbot</a></td><td class='old'>2017-09-02 11:10:54 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Ladsgroup' target='_blank'>Ladsgroup</a></td><td>2026-04-15 14:11:28 UTC</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Mazbot'>Mazbot</a></td><td class='old'>2016-11-16 08:44:47 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Marine-Blue' target='_blank'>Marine-Blue</a></td><td>2026-08-19 06:26:18 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Mazbot'>Mazbot</a></td><td class='old'>2016-11-16 08:44:47 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Marine-Blue' target='_blank'>Marine-Blue</a></td><td>2026-09-30 09:33:34 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Chobot'>Chobot</a></td><td class='old'>2016-11-02 05:34:25 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:ChongDae' target='_blank'>ChongDae</a></td><td>2025-10-30 10:20:13 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:ChoyoBOT'>ChoyoBOT</a></td><td class='old'>2016-06-09 22:12:46 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:重陽' target='_blank'>重陽</a></td><td class='old'>2025-07-30 09:54:37 UTC</td></tr>
 <tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Flow talk page manager'>Flow talk page manager</a></td><td class='old'>2015-10-02 20:02:16 UTC</td><td></td><td class='old'>編集なし</td></tr>
-<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Bot2255'>Bot2255</a></td><td class='old'>2013-12-24 12:29:55 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Jkr2255' target='_blank'>Jkr2255</a></td><td>2026-08-23 01:27:28 UTC</td></tr>
+<tr><td><a href='https://ja.wikipedia.org/wiki/利用者:Bot2255'>Bot2255</a></td><td class='old'>2013-12-24 12:29:55 UTC</td><td><a href='https://ja.wikipedia.org/wiki/利用者:Jkr2255' target='_blank'>Jkr2255</a></td><td>2026-09-29 12:15:04 UTC</td></tr>
 </table>
 </div>
 <h2 id="wiktionary">Wiktionary</h2>
@@ -300,10 +159,9 @@ th {
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:20041027 tatsu'>20041027 tatsu</a></td><td>2026-08-31 17:18:46 UTC</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Whym'>Whym</a></td><td>2026-08-30 12:26:32 UTC</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Yapparina'>Yapparina</a></td><td>2026-08-30 11:31:04 UTC</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Kanjy'>Kanjy</a></td><td class='old'>2024-07-01 14:04:43 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:20041027 tatsu'>20041027 tatsu</a></td><td>2026-09-28 23:20:04 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Yapparina'>Yapparina</a></td><td>2026-09-27 13:51:34 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Whym'>Whym</a></td><td>2026-09-01 10:07:09 UTC</td></tr>
 <tr><td><a href='https://ja.wiktionary.org/wiki/利用者:不正利用フィルター'>不正利用フィルター</a></td><td class='old'>編集なし</td></tr>
 </table>
 </div>
@@ -311,21 +169,20 @@ th {
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Yapparina'>Yapparina</a></td><td>2026-08-30 11:31:04 UTC</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Kanjy'>Kanjy</a></td><td class='old'>2024-07-01 14:04:43 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Yapparina'>Yapparina</a></td><td>2026-09-27 13:51:34 UTC</td></tr>
 </table>
 </div>
 <h3 id="wiktionary-bot">BOT(bot)</h3>
 <div class="table-wrap">
 <table>
 <tr><th>利用者</th><th>最終編集日時</th><th>運用者</th><th>運用者最終編集</th></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:MediaWiki message delivery'>MediaWiki message delivery</a></td><td>2026-08-31 20:53:45 UTC</td><td></td><td class='old'>編集なし</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Bcxfubot'>Bcxfubot</a></td><td>2026-08-23 20:37:45 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Bcxfu75k' target='_blank'>Bcxfu75k</a></td><td>2026-08-24 07:16:49 UTC</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Naggybot'>Naggybot</a></td><td>2026-05-31 10:17:36 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Naggy Nagumo' target='_blank'>Naggy Nagumo</a></td><td>2026-08-16 22:33:37 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:MediaWiki message delivery'>MediaWiki message delivery</a></td><td>2026-09-28 10:49:13 UTC</td><td></td><td class='old'>編集なし</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Bcxfubot'>Bcxfubot</a></td><td>2026-09-21 07:34:51 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Bcxfu75k' target='_blank'>Bcxfu75k</a></td><td>2026-09-14 18:37:15 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Naggybot'>Naggybot</a></td><td>2026-05-31 10:17:36 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Naggy Nagumo' target='_blank'>Naggy Nagumo</a></td><td>2026-09-28 21:50:10 UTC</td></tr>
 <tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Maintenance script'>Maintenance script</a></td><td class='old'>2025-01-31 00:00:32 UTC</td><td></td><td class='old'>編集なし</td></tr>
 <tr><td><a href='https://ja.wiktionary.org/wiki/利用者:WCCbot'>WCCbot</a></td><td class='old'>2023-06-24 12:21:47 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:W.CC' target='_blank'>W.CC</a></td><td class='old'>2020-04-21 11:52:24 UTC</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:OctraBot'>OctraBot</a></td><td class='old'>2018-07-06 11:20:40 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:octahedron80' target='_blank'>octahedron80</a></td><td>2025-09-28 04:39:14 UTC</td></tr>
-<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Whymbot'>Whymbot</a></td><td class='old'>2018-04-07 05:23:39 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Whym' target='_blank'>Whym</a></td><td>2026-08-30 12:26:32 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:OctraBot'>OctraBot</a></td><td class='old'>2018-07-06 11:20:40 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:octahedron80' target='_blank'>octahedron80</a></td><td class='old'>2025-09-28 04:39:14 UTC</td></tr>
+<tr><td><a href='https://ja.wiktionary.org/wiki/利用者:Whymbot'>Whymbot</a></td><td class='old'>2018-04-07 05:23:39 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Whym' target='_blank'>Whym</a></td><td>2026-09-01 10:07:09 UTC</td></tr>
 <tr><td><a href='https://ja.wiktionary.org/wiki/利用者:JAnDbot'>JAnDbot</a></td><td class='old'>2017-08-15 10:58:43 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:JAn Dudík' target='_blank'>JAn Dudík</a></td><td class='old'>2015-09-18 08:46:39 UTC</td></tr>
 <tr><td><a href='https://ja.wiktionary.org/wiki/利用者:RobokoBot'>RobokoBot</a></td><td class='old'>2017-04-23 13:15:33 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Thibaut120094' target='_blank'>Thibaut120094</a></td><td class='old'>2023-01-13 06:39:16 UTC</td></tr>
 <tr><td><a href='https://ja.wiktionary.org/wiki/利用者:UT-interwiki-Bot'>UT-interwiki-Bot</a></td><td class='old'>2017-04-15 15:15:21 UTC</td><td><a href='https://ja.wiktionary.org/wiki/利用者:Udo T.' target='_blank'>Udo T.</a></td><td class='old'>2017-05-24 18:54:47 UTC</td></tr>
